@@ -1,5 +1,10 @@
 import random
 import turtle as t
+
+def get_turn_size():
+    turn_size = input('enter turn size (wide,square,narrow):')
+    return turn_size
+
 def get_line_length():
     choice = input('Enter line length (long, medium, short):')
     if choice == 'long':
@@ -28,18 +33,30 @@ def inside_window():
     inside = left_limit < x < right_limit and bottom_limit < y < top_limit
     return inside
 
-def move_turtle(line_length):
-    pen_colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
-    t.pencolor(random.choice(pen_colors))
+def move_turtle(line_length,turn_size):
+    t.colormode(255)
+    red = random.randint(0,255)
+    blue = random.randint(0,255)
+    green = random.randint(0,255)
+    t.pencolor(red,green,blue)
+    t.fillcolor(red,green,blue)
+    t.shapesize(3,3,1)
+    t.stamp()
     if inside_window():
-        angle = random.randint(0,180)
-        t.right(angle)
-        t.forward(line_length)
+        if turn_size == 'wide':
+            angle = random.randint(120,150)
+        elif turn_size == 'square':
+            angle = random.randint(80,90)
+        else:
+            angle = random.randint(20,40)
+            t.right(angle)
+            t.forward(line_length)
     else:
         t.backward(line_length)
 
 line_length = get_line_length()
 line_width = get_line_width()
+turn_size = get_turn_size()
 
 t.shape('turtle')
 t.fillcolor('green')
@@ -48,4 +65,4 @@ t.speed('fastest')
 t.pensize(line_width)
 
 while True:
-    move_turtle(line_length)
+    move_turtle(line_length,turn_size)
